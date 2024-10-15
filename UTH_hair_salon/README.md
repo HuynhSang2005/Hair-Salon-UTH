@@ -1,1 +1,1 @@
-Hair Salon
+UTH Hair Salon Project
