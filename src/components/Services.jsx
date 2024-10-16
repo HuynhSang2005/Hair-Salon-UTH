@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -56,7 +57,7 @@ const Services = () => {
             maxW="600px"
             mx="auto"
           />
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8}>
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
             {filteredServices.map((service) => (
               <Box
                 key={service.name}
@@ -76,7 +77,7 @@ const Services = () => {
                   ${service.price}
                 </Text>
                 <Text mb={4}>{service.description}</Text>
-                <Button colorScheme="brand" size="sm">
+                <Button as={RouterLink} to="/auth" colorScheme="brand" size="sm">
                   Book Now
                 </Button>
               </Box>

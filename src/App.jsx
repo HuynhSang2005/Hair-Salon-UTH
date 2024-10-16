@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Header from './components/Header';
 import Home from './components/Home';
 import Services from './components/Services';
-import Portfolio from './components/Portfolio';
+import AboutUs from './components/AboutUs';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AuthPage from './components/AuthPage';
@@ -29,7 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<AuthPage />} />
           </Routes>

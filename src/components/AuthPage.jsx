@@ -89,7 +89,7 @@ const AuthPage = () => {
                 <Heading as="h2" size="xl" textAlign="center">
                   Sign up
                 </Heading>
-                <Button leftIcon={<FaFacebook />} colorScheme="facebook" width="full">
+                <Button leftIcon={<FaFacebook />} colorScheme="blue" variant="outline" width="full">
                   Sign up with Facebook
                 </Button>
                 <Button leftIcon={<FaGoogle />} colorScheme="red" variant="outline" width="full">
@@ -99,8 +99,7 @@ const AuthPage = () => {
                 <Text textAlign="center">OR</Text>
                 <form onSubmit={handleRegister}>
                   <VStack spacing={4}>
-                    <HStack spacing={4}>
-                      <FormControl id="firstName" isRequired>
+                      <FormControl id="firstName" isRequired >
                         <FormLabel>First name</FormLabel>
                         <Input
                           type="text"
@@ -116,7 +115,6 @@ const AuthPage = () => {
                           onChange={(e) => setLastName(e.target.value)}
                         />
                       </FormControl>
-                    </HStack>
                     <FormControl id="email" isRequired>
                       <FormLabel>Email address</FormLabel>
                       <Input
@@ -200,7 +198,7 @@ const AuthPage = () => {
                 </form>
                 <Divider />
                 <Text textAlign="center">OR</Text>
-                <Button leftIcon={<FaFacebook />} colorScheme="facebook" width="full">
+                <Button leftIcon={<FaFacebook />} colorScheme="blue" variant="outline"width="full">
                   Continue with Facebook
                 </Button>
                 <Button leftIcon={<FaGoogle />} colorScheme="red" variant="outline" width="full">

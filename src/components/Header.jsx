@@ -30,14 +30,14 @@ const Header = () => {
           <Link as={RouterLink} to="/services" fontWeight="medium">
             Services
           </Link>
-          <Link as={RouterLink} to="/portfolio" fontWeight="medium">
-            Portfolio
+          <Link as={RouterLink} to="/about" fontWeight="medium">
+            About Us
           </Link>
           <Link as={RouterLink} to="/contact" fontWeight="medium">
             Contact
           </Link>
           <Button as={RouterLink} to="/auth" colorScheme="brand" size="md">
-            Appointment
+            Book Now
           </Button>
         </HStack>
       </Flex>

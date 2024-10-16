@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
-import { Box, Container, Heading, Text, Button, VStack, Input, SimpleGrid, Image } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import Staff from './Staff';
 import Testimonials from './Testimonials';
+import ContactFrom from './ContactForm';
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Input,
+  SimpleGrid,
+  Text,
+  VStack,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter
+} from '@chakra-ui/react';
+
+
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [showAll, setShowAll] = useState(false);
 
   const services = [
     { name: 'Haircut', price: 30, description: 'Professional haircut for all styles' },
@@ -18,10 +35,11 @@ const Home = () => {
     service.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+
   return (
     <Box>
-      <Box
-        bgImage="url('/hero-image.jpg')"
+      <Box 
+        bgImage="url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"
         bgPosition="center"
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -74,8 +92,13 @@ const Home = () => {
             mx="auto"
           />
           <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
-            {filteredServices.map((service) => (
-              <Box key={service.name} p={6} boxShadow="md" borderRadius="md">
+  {filteredServices.map((service) => (
+    <Box 
+      key={service.name}
+      p={6}
+      boxShadow="md"
+      borderRadius="md"
+    >
                 <Heading as="h3" size="lg" mb={2}>
                   {service.name}
                 </Heading>
@@ -83,14 +106,27 @@ const Home = () => {
                   ${service.price}
                 </Text>
                 <Text>{service.description}</Text>
+                <Button as={RouterLink} to="/auth" colorScheme="brand" size="sm">
+                  Book Now
+                </Button>
               </Box>
             ))}
+            {!showAll && (
+              <Box textAlign="center" mt={8}>
+                <Button 
+                as={RouterLink} to="/services" 
+                colorScheme="brand" 
+                size="lg">
+                  View More Services
+                </Button>
+              </Box>
+            )}
           </SimpleGrid>
         </VStack>
       </Container>
-
       <Staff />
       <Testimonials />
+      <ContactFrom />
     </Box>
   );
 };
