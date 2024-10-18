@@ -8,6 +8,9 @@ import {
   Image,
   VStack,
   Button,
+  Flex,
+  Avatar,
+  Badge,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -41,11 +44,6 @@ const Staff = () => {
       name: 'Wean',
       experience: '6 years of experience',
       image: 'https://example.com/wean.jpg',
-    },
-    {
-      name: 'Wxrdie',
-      experience: '9 years of experience',
-      image: 'https://example.com/wxrdie.jpg',
     },
   ];
 

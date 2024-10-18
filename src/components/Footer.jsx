@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Container, Stack, Text, Link, IconButton } from '@chakra-ui/react';
 import { FaFacebook, FaInstagram} from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -11,10 +12,10 @@ const Footer = () => {
             UTH Hair Salon
           </Text>
           <Stack direction="row" spacing={6}>
-            <Link href="#">Home</Link>
-            <Link href="#">Services</Link>
-            <Link href="#">Portfolio</Link>
-            <Link href="#">Contact</Link>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/services">Services</NavLink>
+            <NavLink to="/about">About Us</NavLink>
+            <NavLink to="/contact">Contact</NavLink>
           </Stack>
           <Stack direction="row" spacing={4}>
             <IconButton aria-label="Facebook" icon={<FaFacebook />} colorScheme="brand" variant="ghost" />

@@ -15,7 +15,6 @@ import {
   Heading,
   Text,
   Divider,
-  HStack,
   InputGroup,
   InputRightElement,
   Link,
@@ -24,7 +23,7 @@ import {
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
-const AuthPage = () => {
+const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -37,23 +36,25 @@ const AuthPage = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     if (!isValidEmail(loginEmail)) {
-      showToast('Invalid email format');
+      showToast('Invalid email format', 'error');
       return;
     }
     console.log('Login:', { email: loginEmail, password: loginPassword });
+    showToast('Login successful!', 'success');
   };
 
   const handleRegister = (e) => {
     e.preventDefault();
     if (!isValidEmail(registerEmail)) {
-      showToast('Invalid email format');
+      showToast('Invalid email format', 'error');
       return;
     }
     if (!isValidPassword(registerPassword)) {
-      showToast('Password must be at least 8 characters long and contain a mix of letters, numbers & symbols');
+      showToast('Password must be at least 8 characters long and contain a mix of letters, numbers & symbols', 'error');
       return;
     }
     console.log('Register:', { firstName, lastName, email: registerEmail, password: registerPassword });
+    showToast('Registration successful!', 'success');
   };
 
   const isValidEmail = (email) => {
@@ -66,10 +67,10 @@ const AuthPage = () => {
     return passwordRegex.test(password);
   };
 
-  const showToast = (message) => {
+  const showToast = (message, status) => {
     toast({
       title: message,
-      status: 'error',
+      status: status,
       duration: 3000,
       isClosable: true,
     });
@@ -99,22 +100,22 @@ const AuthPage = () => {
                 <Text textAlign="center">OR</Text>
                 <form onSubmit={handleRegister}>
                   <VStack spacing={4}>
-                      <FormControl id="firstName" isRequired >
-                        <FormLabel>First name</FormLabel>
-                        <Input
-                          type="text"
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
-                        />
-                      </FormControl>
-                      <FormControl id="lastName" isRequired>
-                        <FormLabel>Last name</FormLabel>
-                        <Input
-                          type="text"
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
-                        />
-                      </FormControl>
+                    <FormControl id="firstName" isRequired >
+                      <FormLabel>First name</FormLabel>
+                      <Input
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormControl id="lastName" isRequired>
+                      <FormLabel>Last name</FormLabel>
+                      <Input
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                    </FormControl>
                     <FormControl id="email" isRequired>
                       <FormLabel>Email address</FormLabel>
                       <Input
@@ -198,7 +199,7 @@ const AuthPage = () => {
                 </form>
                 <Divider />
                 <Text textAlign="center">OR</Text>
-                <Button leftIcon={<FaFacebook />} colorScheme="blue" variant="outline"width="full">
+                <Button leftIcon={<FaFacebook />} colorScheme="blue" variant="outline" width="full">
                   Continue with Facebook
                 </Button>
                 <Button leftIcon={<FaGoogle />} colorScheme="red" variant="outline" width="full">
@@ -213,4 +214,4 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default Auth;
