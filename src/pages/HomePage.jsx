@@ -2,10 +2,13 @@ import React from 'react'
 import Home from "../components/Home";
 
 
-const HomePage = () => {
+const HomePage = ({services, staffMembers}) => {
 
   return (
-    <Home />
+    <Home
+    services={services}  
+    staffMembers={staffMembers}
+    />
   )
 }
 
