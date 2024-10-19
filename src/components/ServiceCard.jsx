@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Box,
   Heading,
@@ -7,14 +7,14 @@ import {
   VStack,
   HStack,
   useColorModeValue,
-} from '@chakra-ui/react';
-import { StarIcon } from '@chakra-ui/icons';
-import { Link as RouterLink } from 'react-router-dom';
+} from '@chakra-ui/react'
+import { StarIcon } from '@chakra-ui/icons'
+import { Link as RouterLink } from 'react-router-dom'
 
 const ServiceCard = ({ service }) => {
-  const bgColor = useColorModeValue('white', 'gray.700');
-  const borderColor = useColorModeValue('brand.100', 'brand.600');
-  const hoverBgColor = useColorModeValue('brand.50', 'brand.700');
+  const bgColor = useColorModeValue('white', 'gray.700')
+  const borderColor = useColorModeValue('brand.100', 'brand.600')
+  const hoverBgColor = useColorModeValue('brand.50', 'brand.700')
 
   return (
     <Box
@@ -29,28 +29,47 @@ const ServiceCard = ({ service }) => {
       cursor="pointer"
       position="relative"
       overflow="hidden"
+      minHeight="20px"
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
     >
-      <VStack align="start" spacing={4}>
-        <Heading as="h3" size="lg" color="brand.500">
-          {service.name}
-        </Heading>
-        <Text fontSize="3xl" fontWeight="bold" color="gray.700">
-          ${service.price}
-        </Text>
+      {/* Ensure equal spacing between elements */}
+      <VStack align="start" spacing={4} flex="1" justify="space-between">
+        <Box>
+          <Heading as="h3" size="lg" color="brand.500" mb={2}>
+            {service.name}
+          </Heading>
+          <Text fontSize="2xl" fontWeight="bold" color="gray.700">
+            ${service.price}
+          </Text>
+        </Box>
+        
+        {/* Star rating and reviews aligned */}
         <HStack>
           <StarIcon color="yellow.400" />
           <Text fontWeight="semibold">{service.rating.toFixed(1)}</Text>
         </HStack>
-        <Text noOfLines={2} color="gray.600">{service.description}</Text>
-        <Button 
-          as={RouterLink}
-          to={`/booking/${service.id}`} 
-          colorScheme="brand" 
-          size="md" 
-          width="full">
-          Book Now
-        </Button>
+
+        {/* Limit description to 3 lines */}
+        <Text noOfLines={3} color="gray.600">
+          {service.description}
+        </Text>
       </VStack>
+
+      {/* "Book Now" Button fixed at the bottom */}
+      <Button
+        as={RouterLink}
+        to={`/booking/${service.id}`}
+        colorScheme="brand"
+        size="md"
+        width="full"
+        mt={4}
+      >
+        Book Now
+      </Button>
+
+      {/* New badge */}
       <Box
         position="absolute"
         top="-20px"
@@ -69,7 +88,7 @@ const ServiceCard = ({ service }) => {
         New
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default ServiceCard;
+export default ServiceCard

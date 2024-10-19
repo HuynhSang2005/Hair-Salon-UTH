@@ -11,33 +11,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-// const services = [
-//   { id: 1, name: 'Cắt tóc', price: 30, duration: 30},
-//   { id: 2, name: 'Gội đầu và massage da đầu', duration: 120},
-//   { id: 3, name: 'Nhuộm tóc', price: 100, duration: 90},
-//   { id: 4, name: 'Balayage', price: 150,  duration: 150},
-//   { id: 5, name: 'Uốn tóc', price: 200, duration: 180},
-//   { id: 6, name: 'Duỗi tóc', price: 120, duration: 120},
-//   { id: 7, name: 'Tạo kiểu tóc (dự tiệc, sự kiện)', duration: 45},
-//   { id: 8, name: 'Dưỡng tóc (hấp dầu, phục hồi tóc hư tổn)', price: 70,duration: 60},
-//   { id: 9, name: 'Chăm sóc da đầu', price: 50,duration: 45,},
-//   { id: 10, name: 'Tẩy tóc', price: 60,duration: 45,},
-//   { id: 11, name: 'Nối tóc', price: 250, duration: 180},
-//   { id: 12, name: 'Cạo râu', price: 35,duration: 45},
-//   { id: 13, name: 'Cắt tóc cho trẻ em', price: 25,duration: 30,},
-//   { id: 14, name: 'Dập xù', price: 150,duration: 120},
-// ];
-
-const stylists = [
-  { id: 1, name: "Wrxdie" },
-  { id: 2, name: "Tlinh" },
-  { id: 3, name: "MCK" },
-  { id: 4, name: "DRT" },
-  { id: 5, name: "Gill" },
-  { id: 5, name: "Robber" },
-  { id: 6, name: "HieuThuHai" },
-  { id: 7, name: "Wean" },
-];
 
 const timeSlots = [
   "9:00 AM",
@@ -51,7 +24,7 @@ const timeSlots = [
   "5:00 PM",
 ];
 
-const BookingPage = ({services}) => {
+const BookingPage = ({services, staffMembers}) => {
   const { serviceId } = useParams();
   const navigate = useNavigate();
   const toast = useToast();
@@ -67,7 +40,7 @@ const BookingPage = ({services}) => {
     } else {
       navigate("/services");
     }
-  }, [serviceId, navigate]);
+  }, [serviceId, navigate, services]);
 
   const handleBook = () => {
     // Check if user is logged in (you'll need to implement this check)
@@ -107,7 +80,7 @@ const BookingPage = ({services}) => {
               value={selectedStylist}
               onChange={(e) => setSelectedStylist(e.target.value)}
             >
-              {stylists.map((stylist) => (
+              {staffMembers.map((stylist) => (
                 <option key={stylist.id} value={stylist.name}>
                   {stylist.name}
                 </option>

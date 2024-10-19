@@ -1,9 +1,10 @@
 import React from 'react';
 import { Avatar, Badge, Box, Container, Flex, Heading, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 
-const Staff = ({staffMembers}) => {
-  console.log(1+staffMembers);
-  const members = staffMembers || [];
+const Staff = ({ staffMembers }) => {
+  if (!staffMembers || staffMembers.length === 0) {
+    return null;
+  }
 
   return (
     <Box py={16} bg="gray.50">
@@ -13,7 +14,7 @@ const Staff = ({staffMembers}) => {
             Meet Our Expert Stylists
           </Heading>
           <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
-            {members.map((member, index) => (
+            {staffMembers.map((member, index) => (
               <Box
                 key={index}
                 bg="white"
@@ -29,13 +30,15 @@ const Staff = ({staffMembers}) => {
                     {member.name}
                   </Heading>
                   <Text fontStyle="italic" color="gray.600">{member.experience}</Text>
-                  <Flex wrap="wrap" justify="center" gap={2}>
-                    {member.specialties.map((specialty, idx) => (
-                      <Badge key={idx} colorScheme="brand" fontSize="sm">
-                        {specialty}
-                      </Badge>
-                    ))}
-                  </Flex>
+                  {member.specialties && (
+                    <Flex wrap="wrap" justify="center" gap={2}>
+                      {member.specialties.map((specialty, idx) => (
+                        <Badge key={idx} colorScheme="brand" fontSize="sm">
+                          {specialty}
+                        </Badge>
+                      ))}
+                    </Flex>
+                  )}
                 </VStack>
               </Box>
             ))}
