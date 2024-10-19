@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import Staff from '../components/Staff';
 import Testimonials from '../components/Testimonials';
 import ContactForm from '../components/ContactForm';
+import ServiceCard from '../components/ServiceCard';
 
 import {
   Box,
@@ -74,105 +74,93 @@ const Home = ({services, staffMembers}) => {
       </Box>
 
       <Container maxW="container.xl" py={16}>
-        <VStack spacing={8} align="stretch">
-          <Heading as="h2" size="2xl" textAlign="center">
-            Our Top Services
+  <VStack spacing={8} align="stretch">
+    <Heading as="h2" size="2xl" textAlign="center">
+      Our Top Services
+    </Heading>
+    <Input
+      placeholder="Search for a service"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      size="lg"
+      maxW="600px"
+      mx="auto"
+    />
+    
+    <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
+      {filteredServices.map((service, index) => (
+        <Box 
+          key={service.id}
+          display="flex"
+          flexDirection="column"
+          justifyContent="stretch"
+          height="100%" 
+        >
+          
+          <Box display="flex" flexDirection="column" justifyContent="space-between" height="100%">
+            <ServiceCard service={service} key={index} />
+          </Box>
+        </Box>
+      ))}
+    </SimpleGrid>
+
+    <Box textAlign="center">
+      <Button 
+        as={RouterLink} 
+        to="/services" 
+        colorScheme="brand" 
+        size="lg"
+      >
+        View All Services
+      </Button>
+    </Box>
+  </VStack>
+</Container>
+
+      <Box bg="gray.50" py={6}>
+        <Container maxW="container.xl">
+          <Heading as="h2" size="2xl" textAlign="center" mb={12}>
+            Our Professional Team
           </Heading>
-          <Input
-            placeholder="Search for a service"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            size="lg"
-            maxW="600px"
-            mx="auto"
-          />
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
-            {filteredServices.map((service) => (
-              <Box
-                key={service.id}
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
+            {displayedStaff.map((member, index) => (
+              <VStack
+                key={index}
+                bg="white"
                 p={6}
-                boxShadow="md"
                 borderRadius="md"
-                bg={bgColor}
-                borderWidth={1}
-                borderColor={borderColor}
-                transition="all 0.3s"
-                _hover={{ transform: 'translateY(-5px)', boxShadow: 'lg' }}
+                boxShadow="md"
+                align="center"
+                spacing={4}
               >
-                <Heading as="h3" size="lg" mb={2}>
-                  {service.name}
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  borderRadius="full"
+                  boxSize="150px"
+                  objectFit="cover"
+                />
+                <Heading as="h3" size="lg">
+                  {member.name}
                 </Heading>
-                <Text fontSize="2xl" fontWeight="bold" mb={2}>
-                  ${service.price}
-                </Text>
-                <Text mb={4}>{service.description}</Text>
-                <Button
-                  as={RouterLink}
-                  to={`/booking/${service.id}`}
-                  colorScheme="brand"
-                  size="sm"
-                >
-                  Book Now
-                </Button>
-              </Box>
+                <Text>{member.experience}</Text>
+              </VStack>
             ))}
           </SimpleGrid>
-          <Box textAlign="center">
-            <Button 
-              as={RouterLink} 
-              to="/services" 
-              colorScheme="brand" 
-              size="lg"
-            >
-              View All Services
-            </Button>
-          </Box>
-        </VStack>
-      </Container>
-      <Box bg="gray.50" py={6}>
-      <Container maxW="container.xl">
-        <Heading as="h2" size="2xl" textAlign="center" mb={12}>
-          Our Professional Team
-        </Heading>
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
-          {displayedStaff.map((member, index) => (
-            <VStack
-              key={index}
-              bg="white"
-              p={6}
-              borderRadius="md"
-              boxShadow="md"
-              align="center"
-              spacing={4}
-            >
-              <Image
-                src={member.image}
-                alt={member.name}
-                borderRadius="full"
-                boxSize="150px"
-                objectFit="cover"
-              />
-              <Heading as="h3" size="lg">
-                {member.name}
-              </Heading>
-              <Text>{member.experience}</Text>
-            </VStack>
-          ))}
-        </SimpleGrid>
-        {!showAll && (
-          <Box textAlign="center" mt={8}>
-            <Button
-              as={RouterLink}
-              to="/about"
-              colorScheme="brand"
-              size="lg"
-              onClick={() => setShowAll(true)}
-            >
-              View More
-            </Button>
-          </Box>
-        )}
-      </Container>
+          {!showAll && (
+            <Box textAlign="center" mt={8}>
+              <Button
+                as={RouterLink}
+                to="/about"
+                colorScheme="brand"
+                size="lg"
+                onClick={() => setShowAll(true)}
+              >
+                View More
+              </Button>
+            </Box>
+          )}
+        </Container>
       </Box> {/*Display Taff*/}
       <Testimonials />
       <ContactForm />

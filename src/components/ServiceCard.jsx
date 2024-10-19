@@ -29,12 +29,12 @@ const ServiceCard = ({ service }) => {
       cursor="pointer"
       position="relative"
       overflow="hidden"
-      minHeight="20px"
+      minHeight="50px"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
     >
-      {/* Ensure equal spacing between elements */}
+    
       <VStack align="start" spacing={4} flex="1" justify="space-between">
         <Box>
           <Heading as="h3" size="lg" color="brand.500" mb={2}>
@@ -45,19 +45,19 @@ const ServiceCard = ({ service }) => {
           </Text>
         </Box>
         
-        {/* Star rating and reviews aligned */}
+        
         <HStack>
           <StarIcon color="yellow.400" />
           <Text fontWeight="semibold">{service.rating.toFixed(1)}</Text>
         </HStack>
 
-        {/* Limit description to 3 lines */}
+        
         <Text noOfLines={3} color="gray.600">
           {service.description}
         </Text>
       </VStack>
 
-      {/* "Book Now" Button fixed at the bottom */}
+      
       <Button
         as={RouterLink}
         to={`/booking/${service.id}`}
@@ -69,7 +69,7 @@ const ServiceCard = ({ service }) => {
         Book Now
       </Button>
 
-      {/* New badge */}
+      
       <Box
         position="absolute"
         top="-20px"
