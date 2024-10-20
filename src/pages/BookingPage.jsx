@@ -41,9 +41,6 @@ const BookingPage = ({ services, staffMembers }) => {
   const [selectedStylist, setSelectedStylist] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [specialRequests, setSpecialRequests] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cash");
 
@@ -57,11 +54,10 @@ const BookingPage = ({ services, staffMembers }) => {
   }, [serviceId, navigate, services]);
 
   const handleBook = () => {
-    // Check if user is logged in (you'll need to implement this check)
     const isLoggedIn = false; // Replace with actual login check
 
     if (isLoggedIn) {
-      if (!selectedStylist || !selectedDate || !selectedTime || !name || !email || !phone) {
+      if (!selectedStylist || !selectedDate || !selectedTime) {
         toast({
           title: "Missing Information",
           description: "Please fill in all required fields.",
@@ -77,9 +73,6 @@ const BookingPage = ({ services, staffMembers }) => {
         stylist: selectedStylist,
         date: selectedDate,
         time: selectedTime,
-        name,
-        email,
-        phone,
         specialRequests,
         paymentMethod,
       });
@@ -151,36 +144,6 @@ const BookingPage = ({ services, staffMembers }) => {
               </Select>
             </FormControl>
 
-            <FormControl isRequired>
-              <FormLabel>Your Name</FormLabel>
-              <Input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your full name"
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Email</FormLabel>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Phone</FormLabel>
-              <Input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="Enter your phone number"
-              />
-            </FormControl>
-
             <FormControl>
               <FormLabel>Special Requests</FormLabel>
               <Textarea
@@ -204,7 +167,7 @@ const BookingPage = ({ services, staffMembers }) => {
               colorScheme="brand"
               size="lg"
               onClick={handleBook}
-              isDisabled={!selectedStylist || !selectedDate || !selectedTime || !name || !email || !phone}
+              isDisabled={!selectedStylist || !selectedDate || !selectedTime}
             >
               Book Appointment
             </Button>
@@ -213,52 +176,44 @@ const BookingPage = ({ services, staffMembers }) => {
       </Container>
 
       <Modal isOpen={isOpen} onClose={onClose}>
-  <ModalOverlay />
-  <ModalContent
-    style={{
-      height: "300px",
-      margin: "auto",
-      padding: "30px", // Tăng padding cho phần nội dung Modal
-      borderRadius: "8px", // Làm bo tròn góc của Modal
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Thêm đổ bóng nhẹ
-    }}
-  >
-      <ModalHeader style={{ marginBottom: "20px", textAlign: "center", fontSize: "18px", fontWeight: "bold" }}>
-        Login Required
-      </ModalHeader>
-      <ModalCloseButton />
-      <ModalBody style={{ marginBottom: "20px", textAlign: "center", fontSize: "16px", color: "#555" }}>
-        <Text>You need to be logged in to book an appointment.</Text>
-      </ModalBody>
-      <ModalFooter style={{ justifyContent: "center", gap: "10px" }}> 
-          <Button
-            colorScheme="purple" 
-            onClick={() => navigate("/auth")}
-            style={{
-              padding: "10px 20px", 
-              fontWeight: "bold",
-            }}
-          >
-            Log In
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/")}
-            style={{
-              padding: "10px 20px",
-              fontWeight: "bold",
-              color: "#555", 
-            }}
-          >
-            Return to Home
-          </Button>
-      </ModalFooter>
-      </ModalContent>
-  </Modal>
-
+        <ModalOverlay />
+        <ModalContent
+          style={{
+            height: "300px",
+            margin: "auto",
+            padding: "30px",
+            borderRadius: "8px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <ModalHeader style={{ marginBottom: "20px", textAlign: "center", fontSize: "18px", fontWeight: "bold" }}>
+            Login Required
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody style={{ marginBottom: "20px", textAlign: "center", fontSize: "16px", color: "#555" }}>
+            <Text>You need to be logged in to book an appointment.</Text>
+          </ModalBody>
+          <ModalFooter style={{ justifyContent: "center", gap: "10px" }}>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/auth")}
+              style={{ padding: "10px 20px", fontWeight: "bold" }}
+            >
+              Log In
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/")}
+              style={{ padding: "10px 20px", fontWeight: "bold", color: "#555" }}
+            >
+              Return to Home
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
