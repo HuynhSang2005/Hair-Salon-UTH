@@ -73,49 +73,50 @@ const Home = ({services, staffMembers}) => {
         </Container>
       </Box>
 
-      <Container maxW="container.xl" py={16}>
-  <VStack spacing={8} align="stretch">
-    <Heading as="h2" size="2xl" textAlign="center">
-      Our Top Services
-    </Heading>
-    <Input
-      placeholder="Search for a service"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      size="lg"
-      maxW="600px"
-      mx="auto"
-    />
-    
-    <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
-      {filteredServices.map((service, index) => (
-        <Box 
-          key={service.id}
-          display="flex"
-          flexDirection="column"
-          justifyContent="stretch"
-          height="100%" 
-        >
-          
-          <Box display="flex" flexDirection="column" justifyContent="space-between" height="100%">
-            <ServiceCard service={service} key={index} />
-          </Box>
-        </Box>
-      ))}
-    </SimpleGrid>
-
-    <Box textAlign="center">
-      <Button 
-        as={RouterLink} 
-        to="/services" 
-        colorScheme="brand" 
+  <Container maxW="container.xl" py={10} style={{marginBottom: '-50px'}}>
+    <VStack spacing={8} align="stretch">
+      <Heading as="h2" size="2xl" textAlign="center">
+        Our Top Services
+      </Heading>
+      <Input
+        placeholder="Search for a service"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         size="lg"
-      >
-        View All Services
-      </Button>
-    </Box>
-  </VStack>
-</Container>
+        maxW="600px"
+        mx="auto"
+      />
+      
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
+        {filteredServices.map((service, index) => (
+          <Box 
+            key={service.id}
+            display="flex"
+            flexDirection="column"
+            justifyContent="stretch"
+            height="80%" 
+          >
+            
+            <Box display="flex" flexDirection="column" justifyContent="space-between" height="100%">
+              <ServiceCard service={service} key={index} />
+            </Box>
+          </Box>
+        ))}
+      </SimpleGrid>
+
+      <Box textAlign="center">
+        <Button 
+          as={RouterLink} 
+          to="/services" 
+          colorScheme="brand" 
+          size="lg"
+          style={{marginTop: '-120px'}}
+        >
+          View All Services
+        </Button>
+      </Box>
+    </VStack>
+</Container> {/*display Top Services*/}
 
       <Box bg="gray.50" py={6}>
         <Container maxW="container.xl">

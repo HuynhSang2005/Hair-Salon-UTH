@@ -11,13 +11,13 @@ import {
 const Testimonials = () => {
   const testimonials = [
     {
-      name: 'Khứa nào đó',
+      name: 'Chị Tèo',
       country: 'Nước mẽo',
       text: 'Bla bla bla',
     },
     {
-      name: 'bà già nào đó',
-      country: 'Nước em',
+      name: 'Vợ méc xai',
+      country: 'Nước éc hen',
       text: 'Bla bla bla',
     },
   ];

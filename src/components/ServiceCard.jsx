@@ -1,94 +1,76 @@
-import React from 'react'
+import React from 'react';
 import {
-  Box,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
   Heading,
   Text,
   Button,
-  VStack,
   HStack,
-  useColorModeValue,
-} from '@chakra-ui/react'
-import { StarIcon } from '@chakra-ui/icons'
-import { Link as RouterLink } from 'react-router-dom'
+  Badge,
+  Box,
+  VStack,
+} from '@chakra-ui/react';
+import { StarIcon } from '@chakra-ui/icons';
+import { Link as RouterLink } from 'react-router-dom';
 
 const ServiceCard = ({ service }) => {
-  const bgColor = useColorModeValue('white', 'gray.700')
-  const borderColor = useColorModeValue('brand.100', 'brand.600')
-  const hoverBgColor = useColorModeValue('brand.50', 'brand.700')
-
   return (
-    <Box
-      p={6}
-      boxShadow="lg"
-      borderRadius="xl"
-      bg={bgColor}
-      borderWidth={2}
-      borderColor={borderColor}
-      transition="all 0.3s"
-      _hover={{ transform: 'translateY(-8px)', boxShadow: 'xl', bg: hoverBgColor }}
-      cursor="pointer"
-      position="relative"
+    <Card
+      direction="column"
       overflow="hidden"
-      minHeight="50px"
+      variant="outline"
+      borderWidth={2}
+      borderColor="brand.100"
+      _hover={{ transform: 'translateY(-8px)', boxShadow: 'xl', borderColor: 'brand.500' }}
+      transition="all 0.3s"
+      height="400px"
       display="flex"
       flexDirection="column"
-      justifyContent="space-between"
     >
-    
-      <VStack align="start" spacing={4} flex="1" justify="space-between">
-        <Box>
-          <Heading as="h3" size="lg" color="brand.500" mb={2}>
-            {service.name}
-          </Heading>
+      <CardHeader>
+        <Heading size="md" color="brand.500">{service.name}</Heading>
+      </CardHeader>
+
+      <CardBody flex="1" overflow="hidden">
+        <VStack align="start" spacing={2} height="100%">
           <Text fontSize="2xl" fontWeight="bold" color="gray.700">
             ${service.price}
           </Text>
-        </Box>
-        
-        
-        <HStack>
-          <StarIcon color="yellow.400" />
-          <Text fontWeight="semibold">{service.rating.toFixed(1)}</Text>
-        </HStack>
+          <HStack>
+            <StarIcon color="yellow.400" />
+            <Text fontWeight="semibold">{service.rating.toFixed(1)}</Text>
+          </HStack>
+          <Text color="gray.600" noOfLines={3} flex="1">
+            {service.description}
+          </Text>
+        </VStack>
+      </CardBody>
 
-        
-        <Text noOfLines={3} color="gray.600">
-          {service.description}
-        </Text>
-      </VStack>
+      <CardFooter>
+        <Button
+          as={RouterLink}
+          to={`/booking/${service.id}`}
+          colorScheme="brand"
+          width="full"
+        >
+          Book Now
+        </Button>
+      </CardFooter>
 
-      
-      <Button
-        as={RouterLink}
-        to={`/booking/${service.id}`}
-        colorScheme="brand"
-        size="md"
-        width="full"
-        mt={4}
-      >
-        Book Now
-      </Button>
-
-      
-      <Box
+      <Badge
         position="absolute"
-        top="-20px"
-        right="-20px"
-        bg="brand.500"
-        color="white"
-        width="80px"
-        height="80px"
-        transform="rotate(45deg)"
-        display="flex"
-        alignItems="flex-end"
-        justifyContent="center"
-        paddingBottom="5px"
-        fontWeight="bold"
+        top={2}
+        right={2}
+        colorScheme="brand"
+        variant="solid"
+        transform="rotate(15deg)"
       >
         New
-      </Box>
-    </Box>
-  )
-}
+      </Badge>
+    </Card>
+  );
+};
 
-export default ServiceCard
+export default ServiceCard;

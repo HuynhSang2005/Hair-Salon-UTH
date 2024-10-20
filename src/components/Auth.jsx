@@ -22,24 +22,25 @@ import {
 } from '@chakra-ui/react';
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [loginEmail, setLoginEmail] = useState('');
+  const [loginIdentifier, setLoginIdentifier] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
+  const [activeTab, setActiveTab] = useState(0);
   const toast = useToast();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (!isValidEmail(loginEmail)) {
-      showToast('Invalid email format', 'error');
-      return;
-    }
-    console.log('Login:', { email: loginEmail, password: loginPassword });
+    // Implement login logic here
+    console.log('Login:', { identifier: loginIdentifier, password: loginPassword });
     showToast('Login successful!', 'success');
   };
 
@@ -53,7 +54,7 @@ const Auth = () => {
       showToast('Password must be at least 8 characters long and contain a mix of letters, numbers & symbols', 'error');
       return;
     }
-    console.log('Register:', { firstName, lastName, email: registerEmail, password: registerPassword });
+    console.log('Register:', { firstName, lastName, username, phoneNumber, email: registerEmail, password: registerPassword });
     showToast('Registration successful!', 'success');
   };
 
@@ -79,28 +80,75 @@ const Auth = () => {
   return (
     <Box pt={20} pb={16}>
       <Container maxW="container.md">
-        <Tabs isFitted variant="enclosed">
+        <Tabs isFitted variant="enclosed" index={activeTab} onChange={(index) => setActiveTab(index)}>
           <TabList mb="1em">
-            <Tab>Sign up</Tab>
             <Tab>Log in</Tab>
+            <Tab>Sign up</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
               <VStack spacing={4} align="stretch">
                 <Heading as="h2" size="xl" textAlign="center">
-                  Sign up
+                  Log in
                 </Heading>
-                <Button leftIcon={<FaFacebook />} colorScheme="blue" variant="outline" width="full">
-                  Sign up with Facebook
-                </Button>
-                <Button leftIcon={<FaGoogle />} colorScheme="red" variant="outline" width="full">
-                  Sign up with Google
-                </Button>
+                <form onSubmit={handleLogin}>
+                  <VStack spacing={4}>
+                    <FormControl id="login-identifier" isRequired>
+                      <FormLabel>Username or Email</FormLabel>
+                      <Input
+                        type="text"
+                        value={loginIdentifier}
+                        onChange={(e) => setLoginIdentifier(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormControl id="login-password" isRequired>
+                      <FormLabel>Password</FormLabel>
+                      <InputGroup>
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          value={loginPassword}
+                          onChange={(e) => setLoginPassword(e.target.value)}
+                        />
+                        <InputRightElement width="4.5rem">
+                          <Button
+                            h="1.75rem"
+                            size="sm"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                    </FormControl>
+                    <Button type="submit" colorScheme="brand" width="full">
+                      Log in
+                    </Button>
+                  </VStack>
+                </form>
+                <Text textAlign="center" mt={4}>
+                  Don't have an account?{' '}
+                  <Link color="brand.500" onClick={() => setActiveTab(1)}>
+                    Sign up here
+                  </Link>
+                </Text>
                 <Divider />
                 <Text textAlign="center">OR</Text>
+                <Button leftIcon={<FaFacebook />} colorScheme="blue" variant="outline" width="full">
+                  Continue with Facebook
+                </Button>
+                <Button leftIcon={<FaGoogle />} colorScheme="red" variant="outline" width="full">
+                  Continue with Google
+                </Button>
+              </VStack>
+            </TabPanel>
+            <TabPanel>
+              <VStack spacing={4} align="stretch">
+                <Heading as="h2" size="xl" textAlign="center">
+                  Sign up
+                </Heading>
                 <form onSubmit={handleRegister}>
                   <VStack spacing={4}>
-                    <FormControl id="firstName" isRequired >
+                    <FormControl id="firstName" isRequired>
                       <FormLabel>First name</FormLabel>
                       <Input
                         type="text"
@@ -114,6 +162,22 @@ const Auth = () => {
                         type="text"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormControl id="username" isRequired>
+                      <FormLabel>Username</FormLabel>
+                      <Input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormControl id="phoneNumber" isRequired>
+                      <FormLabel>Phone number</FormLabel>
+                      <Input
+                        type="tel"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                       />
                     </FormControl>
                     <FormControl id="email" isRequired>
@@ -156,54 +220,13 @@ const Auth = () => {
                     </Button>
                   </VStack>
                 </form>
-              </VStack>
-            </TabPanel>
-            <TabPanel>
-              <VStack spacing={4} align="stretch">
-                <Heading as="h2" size="xl" textAlign="center">
-                  Log in
-                </Heading>
-                <form onSubmit={handleLogin}>
-                  <VStack spacing={4}>
-                    <FormControl id="login-email" isRequired>
-                      <FormLabel>Email address</FormLabel>
-                      <Input
-                        type="email"
-                        value={loginEmail}
-                        onChange={(e) => setLoginEmail(e.target.value)}
-                      />
-                    </FormControl>
-                    <FormControl id="login-password" isRequired>
-                      <FormLabel>Password</FormLabel>
-                      <InputGroup>
-                        <Input
-                          type={showPassword ? 'text' : 'password'}
-                          value={loginPassword}
-                          onChange={(e) => setLoginPassword(e.target.value)}
-                        />
-                        <InputRightElement width="4.5rem">
-                          <Button
-                            h="1.75rem"
-                            size="sm"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                          </Button>
-                        </InputRightElement>
-                      </InputGroup>
-                    </FormControl>
-                    <Button type="submit" colorScheme="brand" width="full">
-                      Log in
-                    </Button>
-                  </VStack>
-                </form>
                 <Divider />
                 <Text textAlign="center">OR</Text>
                 <Button leftIcon={<FaFacebook />} colorScheme="blue" variant="outline" width="full">
-                  Continue with Facebook
+                  Sign up with Facebook
                 </Button>
                 <Button leftIcon={<FaGoogle />} colorScheme="red" variant="outline" width="full">
-                  Continue with Google
+                  Sign up with Google
                 </Button>
               </VStack>
             </TabPanel>

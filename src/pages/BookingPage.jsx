@@ -9,29 +9,43 @@ import {
   Select,
   Button,
   useToast,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  HStack,
+  Radio,
+  RadioGroup,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 
-
 const timeSlots = [
-  "9:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "12:00 PM",
-  "1:00 PM",
-  "2:00 PM",
-  "3:00 PM",
-  "4:00 PM",
-  "5:00 PM",
+  "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM",
+  "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM",
 ];
 
-const BookingPage = ({services, staffMembers}) => {
+const BookingPage = ({ services, staffMembers }) => {
   const { serviceId } = useParams();
   const navigate = useNavigate();
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [selectedService, setSelectedService] = useState(null);
   const [selectedStylist, setSelectedStylist] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [specialRequests, setSpecialRequests] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("cash");
 
   useEffect(() => {
     const service = services.find((s) => s.id === parseInt(serviceId));
@@ -47,15 +61,38 @@ const BookingPage = ({services, staffMembers}) => {
     const isLoggedIn = false; // Replace with actual login check
 
     if (isLoggedIn) {
+      if (!selectedStylist || !selectedDate || !selectedTime || !name || !email || !phone) {
+        toast({
+          title: "Missing Information",
+          description: "Please fill in all required fields.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      console.log("Booking details:", {
+        service: selectedService.name,
+        stylist: selectedStylist,
+        date: selectedDate,
+        time: selectedTime,
+        name,
+        email,
+        phone,
+        specialRequests,
+        paymentMethod,
+      });
+
       toast({
         title: "Booking Successful",
-        description: `You've booked ${selectedService.name} with ${selectedStylist} at ${selectedTime}`,
+        description: `You've booked ${selectedService.name} with ${selectedStylist} on ${selectedDate} at ${selectedTime}`,
         status: "success",
         duration: 5000,
         isClosable: true,
       });
     } else {
-      navigate("/auth");
+      onOpen();
     }
   };
 
@@ -75,41 +112,122 @@ const BookingPage = ({services, staffMembers}) => {
             <Text>Price: ${selectedService.price}</Text>
             <Text>Duration: {selectedService.duration} minutes</Text>
 
-            <Select
-              placeholder="Select stylist"
-              value={selectedStylist}
-              onChange={(e) => setSelectedStylist(e.target.value)}
-            >
-              {staffMembers.map((stylist) => (
-                <option key={stylist.id} value={stylist.name}>
-                  {stylist.name}
-                </option>
-              ))}
-            </Select>
+            <FormControl isRequired>
+              <FormLabel>Select Stylist</FormLabel>
+              <Select
+                placeholder="Select stylist"
+                value={selectedStylist}
+                onChange={(e) => setSelectedStylist(e.target.value)}
+              >
+                {staffMembers.map((stylist) => (
+                  <option key={stylist.id} value={stylist.name}>
+                    {stylist.name}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
 
-            <Select
-              placeholder="Select time"
-              value={selectedTime}
-              onChange={(e) => setSelectedTime(e.target.value)}
-            >
-              {timeSlots.map((time) => (
-                <option key={time} value={time}>
-                  {time}
-                </option>
-              ))}
-            </Select>
+            <FormControl isRequired>
+              <FormLabel>Select Date</FormLabel>
+              <Input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+              />
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Select Time</FormLabel>
+              <Select
+                placeholder="Select time"
+                value={selectedTime}
+                onChange={(e) => setSelectedTime(e.target.value)}
+              >
+                {timeSlots.map((time) => (
+                  <option key={time} value={time}>
+                    {time}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Your Name</FormLabel>
+              <Input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your full name"
+              />
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Email</FormLabel>
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+              />
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Phone</FormLabel>
+              <Input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter your phone number"
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Special Requests</FormLabel>
+              <Textarea
+                value={specialRequests}
+                onChange={(e) => setSpecialRequests(e.target.value)}
+                placeholder="Any special requests or notes?"
+              />
+            </FormControl>
+
+            <FormControl as="fieldset">
+              <FormLabel as="legend">Payment Method</FormLabel>
+              <RadioGroup value={paymentMethod} onChange={setPaymentMethod}>
+                <HStack spacing={4}>
+                  <Radio value="cash">Cash</Radio>
+                  <Radio value="card">Card</Radio>
+                </HStack>
+              </RadioGroup>
+            </FormControl>
 
             <Button
               colorScheme="brand"
               size="lg"
               onClick={handleBook}
-              isDisabled={!selectedStylist || !selectedTime}
+              isDisabled={!selectedStylist || !selectedDate || !selectedTime || !name || !email || !phone}
             >
               Book Appointment
             </Button>
           </VStack>
         </VStack>
       </Container>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Login Required</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>You need to be logged in to book an appointment.</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="brand" mr={3} onClick={() => navigate("/auth")}>
+              Log In
+            </Button>
+            <Button variant="ghost" onClick={() => navigate("/")}>Return to Home</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
