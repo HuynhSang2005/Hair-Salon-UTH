@@ -213,21 +213,52 @@ const BookingPage = ({ services, staffMembers }) => {
       </Container>
 
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Login Required</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>You need to be logged in to book an appointment.</Text>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="brand" mr={3} onClick={() => navigate("/auth")}>
-              Log In
-            </Button>
-            <Button variant="ghost" onClick={() => navigate("/")}>Return to Home</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+  <ModalOverlay />
+  <ModalContent
+    style={{
+      height: "300px",
+      margin: "auto",
+      padding: "30px", // Tăng padding cho phần nội dung Modal
+      borderRadius: "8px", // Làm bo tròn góc của Modal
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Thêm đổ bóng nhẹ
+    }}
+  >
+      <ModalHeader style={{ marginBottom: "20px", textAlign: "center", fontSize: "18px", fontWeight: "bold" }}>
+        Login Required
+      </ModalHeader>
+      <ModalCloseButton />
+      <ModalBody style={{ marginBottom: "20px", textAlign: "center", fontSize: "16px", color: "#555" }}>
+        <Text>You need to be logged in to book an appointment.</Text>
+      </ModalBody>
+      <ModalFooter style={{ justifyContent: "center", gap: "10px" }}> 
+          <Button
+            colorScheme="purple" 
+            onClick={() => navigate("/auth")}
+            style={{
+              padding: "10px 20px", 
+              fontWeight: "bold",
+            }}
+          >
+            Log In
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/")}
+            style={{
+              padding: "10px 20px",
+              fontWeight: "bold",
+              color: "#555", 
+            }}
+          >
+            Return to Home
+          </Button>
+      </ModalFooter>
+      </ModalContent>
+  </Modal>
+
     </Box>
   );
 };
